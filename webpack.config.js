@@ -1,9 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')  // 执行时间分析
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin     // 构建结果分析
-const smp = new SpeedMeasurePlugin()
+// const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')  // 执行时间分析
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin     // 构建结果分析
+// const smp = new SpeedMeasurePlugin()
 console.log('process.env.NODE_ENV=', process.env.NODE_ENV)
 
 function resolve(dir) {
@@ -64,10 +64,10 @@ const config = {
       template: './src/index.html'
     }),
     new CleanWebpackPlugin(),
-    new BundleAnalyzerPlugin({
-      // analyzerMode: 'disabled',  // 不启动展示打包报告的http服务器
-      // generateStatsFile: true, // 是否生成stats.json文件
-    })
+    // new BundleAnalyzerPlugin({
+    //   // analyzerMode: 'disabled',  // 不启动展示打包报告的http服务器
+    //   // generateStatsFile: true, // 是否生成stats.json文件
+    // })
   ],
   devServer: {
     // contentBase: path.resolve(__dirname, 'public'), // 静态文件目录
@@ -79,5 +79,6 @@ const config = {
 
 module.exports = (env, argv) => {
   console.log('argv.mode', argv.mode)
-  return smp.wrap(config)
+  // return smp.wrap(config)
+  return config
 }
