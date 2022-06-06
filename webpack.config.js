@@ -20,11 +20,18 @@ const config = {
     alias: {
       '~': resolve('src'),
       '@': resolve('src'),
-      'components': resolve('src/components')
+      'components': resolve('src/components'),
+      crypto: false
     },
+
     // 1. 高频文件后缀名放前面；
     // 2. 手动配置后，默认配置会被覆盖
     // extensions: ['.js', '.json'] // 引入模块时不带扩展名, 左到右的顺序去尝试解析模块 
+
+    fallback: {
+      "path": require.resolve("path-browserify"),
+      "crypto": require.resolve("crypto-browserify")
+    }
   },
   devtool: 'source-map',
   module: {
@@ -44,16 +51,12 @@ const config = {
         include: resolve('src'),
         exclude: /node_modules/,
         use: [{
-          loader: 'thread-loader',
-          options: {
-            presets: [
-              '@babel/preset-env'
-            ]
-          },
-        }, {
           loader: 'babel-loader',
           options: {
-            cacheDirectory: true
+            presets: [['@babel/preset-env', {
+              useBuiltIns: 'usage', //不能是“entry”
+              corejs: 3
+            }]]
           }
         }]
       }

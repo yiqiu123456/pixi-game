@@ -13,6 +13,7 @@ module.exports = {
     },
     "globals": {
         "__dirname": true,
-        process: true
+        process: true,
+        app: true
     }
 }
