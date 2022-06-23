@@ -21,6 +21,11 @@ export default class Yiqiu extends Container {
     this.$pieces.y = 208
     this.addChild(this.$pieces)
 
+    this.$select = new Container()
+    this.$select.y = 208
+    this.$select.x = -4
+    this.addChild(this.$select)
+
     this._createPieces()
   }
 
@@ -41,6 +46,7 @@ export default class Yiqiu extends Container {
   }
 
   _createPieces() {
+
     this.piece_width = this.texture.orig.width / this.level
     this.piece_height = this.texture.orig.height / this.level
 
@@ -50,29 +56,37 @@ export default class Yiqiu extends Container {
     let shuffled_index = this._shuffle()
 
     for (let ii = 0; ii < shuffled_index.length; ii++) {
-      let row = parseInt(shuffled_index[ii] / this.level)
-      let col = shuffled_index[ii] % this.level
 
-      let frame = new Rectangle(col * this.piece_width, row * this.piece_height, this.piece_width, this.piece_height)
-
+      //pick a piece from the big texture indicated by suffled indexes.
+      let frame_row = parseInt(shuffled_index[ii] / this.level)
+      let frame_col = shuffled_index[ii] % this.level
+      let frame = new Rectangle(frame_col * this.piece_width, frame_row * this.piece_height, this.piece_width, this.piece_height)
       let piece = new Piece(new Texture(this.texture, frame), ii, shuffled_index[ii])
 
-      let current_row = parseInt(ii / this.level)
-      let current_col = ii % this.level
-      piece.x = current_col * this.piece_width - offset_x + GAP_SIZE * current_col
-      piece.y = current_row * this.piece_height - offset_y + GAP_SIZE * current_row
 
-      piece.on('dragstart', (picked) => {
-        this.$pieces.removeChild(picked)
-        this.$select.addChild(picked)
-      })
+      //add the piece to ui
+      let row = parseInt(ii / this.level)
+      let col = ii % this.level
+      piece.x = col * this.piece_width - offset_x + GAP_SIZE * col
+      piece.y = row * this.piece_height - offset_y + GAP_SIZE * row
+
+      piece
+        .on('dragstart', (picked) => {
+          //put the selected（drag and move） piece on top of the others pieces.
+          this.$pieces.removeChild(picked)
+          this.$select.addChild(picked)
+        })
         .on('dragmove', (picked) => {
+          //check if hover on the other piece
           this._checkHover(picked)
         })
         .on('dragend', (picked) => {
+
+          //restore the piece layer
           this.$select.removeChild(picked)
           this.$pieces.addChild(picked)
 
+          //check if can swap the piece
           let target = this._checkHover(picked)
           if (target) {
             this.moveCount++
@@ -113,8 +127,8 @@ export default class Yiqiu extends Container {
     })
 
     this.$pieces.children.forEach(piece => piece.tint = 0xFFFFFF)
-    
-    if(overlap) {
+
+    if (overlap) {
       overlap.tint = 0x00ffff
     }
 

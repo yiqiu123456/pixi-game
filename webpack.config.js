@@ -1,6 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 // const SpeedMeasurePlugin = require('speed-measure-webpack-plugin')  // 执行时间分析
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin     // 构建结果分析
 // const smp = new SpeedMeasurePlugin()
@@ -41,7 +42,7 @@ const config = {
         use: ['style-loader', 'css-loader', 'postcss-loader']
       },
       {
-        test: /\.(jpe?g|png|gif)$/i,
+        test: /\.(jpe?g|png|gif|mp3)$/i,
         use: [
           'file-loader'
         ]
@@ -65,6 +66,12 @@ const config = {
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/index.html'
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{
+        from: path.join(__dirname, 'src/assets'),
+        to: './assets'
+      }]
     }),
     new CleanWebpackPlugin(),
     // new BundleAnalyzerPlugin({

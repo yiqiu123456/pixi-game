@@ -33,7 +33,7 @@ export const resource = [
   },
   {
     name: 'sound_bg',
-    url: 'assets/audio/win.map3'
+    url: 'assets/audio/win.mp3'
   },
   {
     name: 'sound_win',

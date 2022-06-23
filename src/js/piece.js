@@ -32,6 +32,14 @@ export default class Piece extends Sprite {
 
     this.emit('dragstart', this)
   }
+  _onDragMove() {
+    if (this.dragging) {
+      const pos = this.data.getLocalPosition(this.parent)
+      this.x = pos.x - this.offset_x
+      this.y = pos.y - this.offset_y
+      this.emit('dragmove', this)
+    }
+  }
 
   _onDragEnd() {
     if (this.dragging) {

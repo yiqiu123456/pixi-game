@@ -48,7 +48,8 @@ function loadRes() {
 
 function setup() {
   let scene = new Scene()
-  layers.scene.addChild(scene)
+  app.stage.addChild(scene)
+  // layers.scene.addChild(scene)
   scene.start()
 }
 
@@ -60,6 +61,7 @@ window.onload = async () => {
   try {
     await loadRes()
   } catch (error) {
+    console.log(error)
     let reload = await swal({
       title: 'load resource failed',
       text: error,

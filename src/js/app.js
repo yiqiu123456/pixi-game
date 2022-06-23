@@ -33,6 +33,7 @@ export default class Application extends PIXI.Application {
     //挂载模块
     this.sound = new Sound()
     this.i18n = new I18n(config.i18n)
+
   }
 
   //自适应cavas大小和位置，按比例铺满宽或者高。
@@ -94,30 +95,17 @@ export default class Application extends PIXI.Application {
         loader.add(res)
       }
     })
-    loader.on('start', () => {
-      console.log('loader:start')
-      this.emit('loader:start')
-    })
-    .on('progress', (loader, res) => {
-      this.emit('loader:progress', parseInt(loader.progress))
-    })
-    .on('load', (loader, res) => {
-      console.log(`loader:load ${res.url}`)
-      // this.emit('loader:res', res.url)
-    })
-    .on('error', (err, loader, res) => {
-      console.warn(err)
-      this.emit('loader:error', res.url)
-    })
-    .load((loader, res) => {
+    loader.load((loader, res) => {
       console.log('loader:completed')
       apply.res = res
       this.i18n.add(res[this.i18n.file].data)
       delete res[this.i18n.file]
+      this.res = res
       this.emit('loader:complete', res)
     })
     return loader
   }
+
 }
 
 Object.assign(Application.prototype, PIXI.utils.EventEmitter.prototype)
