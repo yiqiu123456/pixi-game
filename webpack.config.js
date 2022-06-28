@@ -67,6 +67,7 @@ const config = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
+    // 处理静态资源问题，Pixi.js的图片集加载
     new CopyWebpackPlugin({
       patterns: [{
         from: path.join(__dirname, 'src/assets'),

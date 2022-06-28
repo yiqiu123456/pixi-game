@@ -121,7 +121,7 @@ export default class Yiqiu extends Container {
   }
 
   _checkHover(picked) {
-    let overlap = this.$pieces.addChildren.find(piece => {
+    let overlap = this.$pieces.children.find(piece => {
       let rect = new Rectangle(piece.x, picked.y, piece.width, piece.height)
       return rect.contains(picked.center.x, picked.center.y)
     })
