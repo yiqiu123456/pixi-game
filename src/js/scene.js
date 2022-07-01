@@ -1,5 +1,4 @@
 import {TextStyle,Container,Sprite,Text} from 'pixi.js'
-import yiqiu from './yiqiu'
 import Result from './result'
 import Yiqiu from './yiqiu'
 
@@ -43,26 +42,26 @@ export default class Scene extends Container {
   }
 
   start() {
-    // let result = new Result()
-    // this.addChild(result)
+    let result = new Result()
+    this.addChild(result)
 
-    // app.sound.play('sound_bg', true)
+    app.sound.play('sound_bg', true)
 
-    // let timer = setInterval( () => {
-    //   if(this.yiqiu.success) {
-    //     clearInterval(timer)
-    //     app.sound.stop('sound_bg')
-    //     app.sound.play('sound_win')
-    //     result.win()
-    //   } else {
-    //     this.$time.text = _countdown + '″'
-    //     if( _countdown == 0) {
-    //       clearInterval(timer)
-    //       app.sound.stop('sound_bg')
-    //       app.sound.play('sound_fail')
-    //       result.fail()
-    //     }
-    //   }
-    // }, 1000)
+    let timer = setInterval( () => {
+      if(this.yiqiu.success) {
+        clearInterval(timer)
+        app.sound.stop('sound_bg')
+        app.sound.play('sound_win')
+        result.win()
+      } else {
+        this.$time.text = _countdown + '″'
+        if( _countdown == 0) {
+          clearInterval(timer)
+          app.sound.stop('sound_bg')
+          app.sound.play('sound_fail')
+          result.fail()
+        }
+      }
+    }, 1000)
   }
 }

@@ -22,8 +22,8 @@ export default class Yiqiu extends Container {
     this.addChild(this.$pieces)
 
     this.$select = new Container()
-    this.$select.y = 208
     this.$select.x = -4
+    this.$select.y = 208
     this.addChild(this.$select)
 
     this._createPieces()
