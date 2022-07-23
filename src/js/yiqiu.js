@@ -4,6 +4,18 @@ import Piece from './piece'
 //piece之间的空隙
 const GAP_SIZE = 2
 
+// 步数等于难度
+const COUNT = 10
+
+// 游戏进行中
+const BEGINING = 1
+
+// 游戏成功
+const SUCCESS = 2
+
+// 游戏失败
+const FAIL = 3
+
 //拼图类，控制拼图逻辑，计算块位置，检查游戏是否结束。
 export default class Yiqiu extends Container {
   //level难度，比如level=3，则拼图切分成3*3=9块，可尝试换成更大的值调高难度。
@@ -13,6 +25,7 @@ export default class Yiqiu extends Container {
     this.level = level
     this.texture = texture
 
+    this.gameStatus = BEGINING
     //移动步数
     this.moveCount = 0
 
@@ -115,9 +128,12 @@ export default class Yiqiu extends Container {
   get success() {
     let success = this.$pieces.children.every(piece => piece.currentIndex == piece.targetIndex)
     if (success) {
-      console.log('success', this.moveCount)
+      return SUCCESS
+    } else if(this.moveCount < (this.level * COUNT + 20)) {
+      return BEGINING
+    } else {
+      return FAIL
     }
-    return success
   }
 
   _checkHover(picked) {

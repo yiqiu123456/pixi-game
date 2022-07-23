@@ -2,7 +2,7 @@ import { Container } from 'pixi.js'
 import * as config from './config'
 import Application from './app'
 import Loading from './loading'
-import VideoAd from './ad'
+// import VideoAd from './ad'
 import Scene from './scene'
 import swal from 'sweetalert'
 
